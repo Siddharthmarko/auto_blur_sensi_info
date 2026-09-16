@@ -7,6 +7,7 @@ import {
   Download,
   FolderOpen,
   HelpCircle,
+  FileCode,
 } from 'lucide-react';
 import { useProject } from '../../state/ProjectContext';
 import { frameToSeconds, formatFileSize } from '../utils/formatters';
@@ -16,12 +17,14 @@ interface HeaderProps {
   onOpenRenderModal: () => void;
   onOpenShortcutsModal: () => void;
   onOpenFilePicker: () => void;
+  onOpenImportJsonModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenRenderModal,
   onOpenShortcutsModal,
   onOpenFilePicker,
+  onOpenImportJsonModal,
 }) => {
   const { project, canUndo, canRedo, undo, redo, setVideo } = useProject();
   const [isGeneratingDemo, setIsGeneratingDemo] = useState(false);
@@ -90,6 +93,16 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
 
         <div style={{ width: 1, height: 20, background: 'var(--border-subtle)' }} />
+
+        {/* Import JSON Detection Boxes */}
+        <button
+          className="btn btn-secondary"
+          onClick={onOpenImportJsonModal}
+          title="Import coordinates from blur_data.json as editable blur boxes"
+        >
+          <FileCode size={14} color="#06b6d4" />
+          <span>Import JSON</span>
+        </button>
 
         <button
           className="btn btn-secondary"

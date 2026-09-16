@@ -8,12 +8,14 @@ import { PropertiesPanel } from './components/PropertiesPanel';
 import { Timeline } from './components/Timeline/Timeline';
 import { RenderModal } from './components/RenderModal';
 import { ShortcutsModal } from './components/ShortcutsModal';
+import { ImportJsonModal } from './components/ImportJsonModal';
 import { VideoAsset } from '../types/project';
 
 export const EditorApp: React.FC = () => {
   const { project, setVideo } = useProject();
   const [isRenderModalOpen, setIsRenderModalOpen] = useState(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
+  const [isImportJsonOpen, setIsImportJsonOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleManualFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,18 +81,22 @@ export const EditorApp: React.FC = () => {
         onOpenRenderModal={() => setIsRenderModalOpen(true)}
         onOpenShortcutsModal={() => setIsShortcutsOpen(true)}
         onOpenFilePicker={() => fileInputRef.current?.click()}
+        onOpenImportJsonModal={() => setIsImportJsonOpen(true)}
       />
 
       {/* Main Workspace */}
       <div className="editor-workspace">
         {/* Left Toolbar */}
-        <Toolbar onOpenShortcuts={() => setIsShortcutsOpen(true)} />
+        <Toolbar
+          onOpenShortcuts={() => setIsShortcutsOpen(true)}
+          onOpenImportJson={() => setIsImportJsonOpen(true)}
+        />
 
         {/* Center Canvas / Preview Stage */}
         {project.video ? <PreviewPlayer /> : <VideoLoader />}
 
         {/* Right Properties Panel */}
-        <PropertiesPanel />
+        <PropertiesPanel onOpenImportJson={() => setIsImportJsonOpen(true)} />
       </div>
 
       {/* Bottom Timeline */}
@@ -105,6 +111,11 @@ export const EditorApp: React.FC = () => {
       <ShortcutsModal
         isOpen={isShortcutsOpen}
         onClose={() => setIsShortcutsOpen(false)}
+      />
+
+      <ImportJsonModal
+        isOpen={isImportJsonOpen}
+        onClose={() => setIsImportJsonOpen(false)}
       />
     </div>
   );

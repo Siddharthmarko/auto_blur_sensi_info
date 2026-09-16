@@ -17,8 +17,10 @@ interface ProjectContextType {
   // Actions
   setVideo: (video: VideoAsset | null) => void;
   addEffect: (effect?: Partial<BlurEffect>) => BlurEffect;
+  importEffects: (newEffects: BlurEffect[], replaceExisting?: boolean) => void;
   updateEffect: (id: string, updates: Partial<BlurEffect>, recordHistory?: boolean) => void;
   removeEffect: (id: string) => void;
+  clearEffects: () => void;
   duplicateEffect: (id: string) => void;
   setSelectedEffectId: (id: string | null) => void;
   setActiveTool: (tool: EditorTool) => void;
@@ -132,6 +134,21 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return newEffect;
   }, [project, currentFrame, pushHistory]);
 
+  const importEffects = useCallback((newEffects: BlurEffect[], replaceExisting = false) => {
+    if (newEffects.length === 0) return;
+    pushHistory(project);
+
+    setProjectState((prev) => ({
+      ...prev,
+      effects: replaceExisting ? newEffects : [...prev.effects, ...newEffects],
+    }));
+
+    if (newEffects.length > 0) {
+      setSelectedEffectId(newEffects[0].id);
+      setActiveTool('select');
+    }
+  }, [project, pushHistory]);
+
   const updateEffect = useCallback(
     (id: string, updates: Partial<BlurEffect>, recordHistory = true) => {
       if (recordHistory) {
@@ -158,6 +175,16 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setSelectedEffectId(null);
     }
   }, [project, selectedEffectId, pushHistory]);
+
+  const clearEffects = useCallback(() => {
+    if (project.effects.length === 0) return;
+    pushHistory(project);
+    setProjectState((prev) => ({
+      ...prev,
+      effects: [],
+    }));
+    setSelectedEffectId(null);
+  }, [project, pushHistory]);
 
   const duplicateEffect = useCallback((id: string) => {
     const target = project.effects.find((e) => e.id === id);
@@ -292,8 +319,10 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
         playerRef,
         setVideo,
         addEffect,
+        importEffects,
         updateEffect,
         removeEffect,
+        clearEffects,
         duplicateEffect,
         setSelectedEffectId,
         setActiveTool,

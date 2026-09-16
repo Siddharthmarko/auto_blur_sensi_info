@@ -53,3 +53,23 @@ export interface RenderSettings {
   scale: number; // 1 = 100%, 0.75, 0.5
   fps: number;
 }
+
+export interface JsonDetectionItem {
+  frame: number;
+  text?: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface JsonBlurData {
+  video: {
+    fps: number;
+    analysisFps?: number;
+    width: number;
+    height: number;
+    totalFrames: number;
+  };
+  detections: JsonDetectionItem[];
+}

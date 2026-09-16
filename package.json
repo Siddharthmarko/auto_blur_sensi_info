@@ -2,7 +2,21 @@
   "name": "remotion-blur-editor",
   "private": true,
   "version": "1.0.0",
+  "description": "Full-stack browser-based video blur and redact editor built with React, Remotion, and Express with AI OCR auto-blur support.",
   "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "remotion",
+    "video-editor",
+    "blur",
+    "redaction",
+    "react",
+    "typescript",
+    "vite",
+    "express",
+    "ocr",
+    "easyocr"
+  ],
   "scripts": {
     "dev": "concurrently -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run server:dev\" \"npm run client:dev\"",
     "client:dev": "vite",

@@ -11,11 +11,16 @@ import {
   Clock,
   Plus,
   Play,
+  FileCode,
 } from 'lucide-react';
 import { useProject } from '../../state/ProjectContext';
 import { frameToTimecode, frameToSeconds } from '../utils/formatters';
 
-export const PropertiesPanel: React.FC = () => {
+interface PropertiesPanelProps {
+  onOpenImportJson?: () => void;
+}
+
+export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({ onOpenImportJson }) => {
   const {
     project,
     selectedEffect,
@@ -351,14 +356,27 @@ export const PropertiesPanel: React.FC = () => {
             <Layers size={13} />
             <span>Blur Layers ({project.effects.length})</span>
           </div>
-          <button
-            className="btn btn-secondary"
-            style={{ fontSize: 11, padding: '2px 8px' }}
-            onClick={() => addEffect()}
-          >
-            <Plus size={12} />
-            <span>Add</span>
-          </button>
+          <div style={{ display: 'flex', gap: 4 }}>
+            {onOpenImportJson && (
+              <button
+                className="btn btn-secondary"
+                style={{ fontSize: 11, padding: '2px 6px', color: '#38bdf8' }}
+                onClick={onOpenImportJson}
+                title="Import detection boxes from JSON"
+              >
+                <FileCode size={12} />
+                <span>JSON</span>
+              </button>
+            )}
+            <button
+              className="btn btn-secondary"
+              style={{ fontSize: 11, padding: '2px 8px' }}
+              onClick={() => addEffect()}
+            >
+              <Plus size={12} />
+              <span>Add</span>
+            </button>
+          </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 4 }}>

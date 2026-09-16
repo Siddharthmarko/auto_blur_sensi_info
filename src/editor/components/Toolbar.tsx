@@ -1,28 +1,25 @@
 import React from 'react';
-import { MousePointer, EyeOff, Plus, Trash2, HelpCircle } from 'lucide-react';
+import { MousePointer, EyeOff, Plus, Trash2, HelpCircle, FileCode } from 'lucide-react';
 import { useProject } from '../../state/ProjectContext';
 
 interface ToolbarProps {
   onOpenShortcuts: () => void;
+  onOpenImportJson: () => void;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({ onOpenShortcuts }) => {
+export const Toolbar: React.FC<ToolbarProps> = ({ onOpenShortcuts, onOpenImportJson }) => {
   const {
     activeTool,
     setActiveTool,
     addEffect,
     project,
-    setVideo,
+    clearEffects,
   } = useProject();
 
   const handleClearAll = () => {
     if (project.effects.length === 0) return;
     if (window.confirm('Remove all blur effects from this video?')) {
-      project.effects.forEach(() => {});
-      // update project with empty effects
-      if (project.video) {
-        setVideo({ ...project.video });
-      }
+      clearEffects();
     }
   };
 
@@ -58,6 +55,15 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onOpenShortcuts }) => {
         title="Add Default Blur Region at Playhead"
       >
         <Plus size={18} />
+      </button>
+
+      {/* Import JSON Detections Tool */}
+      <button
+        className="tool-button"
+        onClick={onOpenImportJson}
+        title="Import JSON detection coordinates as editable blur boxes"
+      >
+        <FileCode size={18} color="#06b6d4" />
       </button>
 
       {/* Clear all blur effects */}

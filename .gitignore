@@ -1,6 +1,65 @@
-./node_modules
-/node_modules
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production and Build
+dist/
+build/
+.remotion/
+
+# Temporary / Generated Video Media & Renders
+public/uploads/*
+!public/uploads/.gitkeep
+public/renders/*
+!public/renders/.gitkeep
+auto-blur/output/*
+!auto-blur/output/.gitkeep
 *.mp4
-.*mp4
-./dist
-/dist
+*.webm
+*.mov
+*.mkv
+*.avi
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python cache & virtual environments (for auto-blur module)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Editor & IDE settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
